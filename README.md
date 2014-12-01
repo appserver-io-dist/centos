@@ -1,7 +1,7 @@
-Distribution build and packaging environment for CentOs Linux
+Distribution build and packaging environment for CentOS Linux
 =============================================================
 
-This package provides build and packaging tools for [CentOs](http://www.centos.org/) versions of appserver.io.
+This package provides build and packaging tools for [CentOS](http://www.centos.org/) versions of appserver.io.
 
 # External Links
 
