@@ -27,7 +27,7 @@ Provides:   appserver-dist
 /opt/appserver/*
 /etc/init.d/*
 
-%post -p /bin/bash
+%post
 # Reload shared library list
 ldconfig
 
