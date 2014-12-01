@@ -46,6 +46,7 @@ chmod 775 /etc/init.d/appserver-php5-fpm
 
 # run postinstall script from appserver-io/appserver composer package
 # to set correct path for specific startup scripts
+cd /opt/appserver
 /opt/appserver/bin/php /opt/appserver/bin/composer.phar run-script post-install-cmd
 
 # Start the appserver + watcher + fpm
