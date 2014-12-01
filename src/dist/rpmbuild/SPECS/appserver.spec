@@ -39,9 +39,6 @@ chown -R nobody:nobody /opt/appserver/deploy
 # Create composer symlink
 ln -s /opt/appserver/bin/composer.phar /opt/appserver/bin/composer
 
-# Reload the systemd daemon
-systemctl daemon-reload
-
 # run postinstall script from appserver-io/appserver composer package
 # to set correct path for specific startup scripts
 cd /opt/appserver
