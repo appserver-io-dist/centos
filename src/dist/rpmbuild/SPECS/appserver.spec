@@ -37,12 +37,11 @@ chown -R nobody:nobody /opt/appserver/webapps
 chown -R nobody:nobody /opt/appserver/deploy
 
 # Create composer symlink
-ln -s /opt/appserver/bin/composer.phar /opt/appserver/bin/composer
+ln -sf /opt/appserver/bin/composer.phar /opt/appserver/bin/composer
 
 # run postinstall script from appserver-io/appserver composer package
 # to set correct path for specific startup scripts
-cd /opt/appserver
-./bin/php ./bin/composer.phar run-script post-install-cmd
+/opt/appserver/bin/php /opt/appserver/bin/composer.phar run-script post-install-cmd
 
 # Start the appserver + watcher + fpm
 chmod 775 /etc/init.d/appserver
