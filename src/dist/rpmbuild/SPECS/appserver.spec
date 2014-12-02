@@ -44,10 +44,10 @@ chmod 775 /etc/init.d/appserver
 chmod 775 /etc/init.d/appserver-watcher
 chmod 775 /etc/init.d/appserver-php5-fpm
 
-# run postinstall script from appserver-io/appserver composer package
-# to set correct path for specific startup scripts
-cd /opt/appserver
-/opt/appserver/bin/php /opt/appserver/bin/composer.phar run-script post-install-cmd
+# run postinstall script from appserver-io/appserver composer package to set correct path for specific startup scripts.
+# we have to set the composer home dir manually to avoid problems while installing within a GUI
+export COMPOSER_HOME=/tmp/.composer
+cd /opt/appserver && ./bin/php ./bin/composer.phar run-script post-install-cmd
 
 # Start the appserver + watcher + fpm
 /etc/init.d/appserver start
