@@ -31,10 +31,8 @@ Provides:   appserver-dist
 # Reload shared library list
 ldconfig
 
-# Set needed files as accessable for the configured user
-chown -R nobody:nobody /opt/appserver/var
-chown -R nobody:nobody /opt/appserver/webapps
-chown -R nobody:nobody /opt/appserver/deploy
+# Setup appserver by calling server.php with -s install to trigger install mode setup
+/opt/appserver/server.php -s install
 
 # Create composer symlink
 ln -sf /opt/appserver/bin/composer.phar /opt/appserver/bin/composer
