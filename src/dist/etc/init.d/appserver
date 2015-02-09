@@ -14,7 +14,7 @@
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 BASE_PATH='/opt/appserver'
 DAEMON="${BASE_PATH}/bin/php" 
-DAEMON_OPTS="-dappserver.php_sapi=appserver -dappserver.remove_functions=putenv,getenv ${BASE_PATH}/server.php"
+DAEMON_OPTS="-dappserver.php_sapi=appserver ${BASE_PATH}/server.php"
 NAME="appserver"
 DESC="appserver"
 PIDFILE="/var/run/${NAME}.pid"
@@ -22,6 +22,14 @@ LOCKFILE="/var/lock/subsys/${NAME}"
 
 # Include the functions file as we need it for the "killproc" command
 . /etc/init.d/functions
+
+###
+# Tests the config of the appserver installation without starting it
+###
+configtest() {
+    printf "%-50s" "Testing config of $NAME..."
+    echo `$DAEMON $DAEMON_OPTS -t`;
+}
 
 # Start script is implemented manually as we had problems with the "daemon" command
 # @TODO switch to "daemon" command for a unified look and feel
@@ -65,24 +73,27 @@ stop() {
 }
 
 case "$1" in
-  start)
-	start
-	;;
-  stop)
-	stop
-	;;
-  restart|force-reload)
-	stop
-	start
-	;;
-  status)
-    status $NAME
-	;;
-  *)
-	N=/etc/init.d/$NAME
-	echo "Usage: $N {start|stop|restart|force-reload|status}" >&2
-	exit 1
-	;;
+    start)
+        start
+    ;;
+    stop)
+        stop
+    ;;
+    restart|force-reload)
+        stop
+        start
+    ;;
+    status)
+        status $NAME
+    ;;
+    configtest)
+        configtest
+        ;;
+    *)
+        N=/etc/init.d/$NAME
+        echo "Usage: $N {start|stop|restart|force-reload|status|configtest}" >&2
+        exit 1
+    ;;
 esac
 
 exit 0
