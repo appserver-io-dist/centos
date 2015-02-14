@@ -3,6 +3,7 @@
 /build
 /.idea
 /.project
+/.settings
 .DS_Store
 ._.DS_Store
 build.properties

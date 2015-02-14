@@ -31,10 +31,8 @@ Provides:   appserver-dist
 # Reload shared library list
 ldconfig
 
-# Set needed files as accessable for the configured user
-chown -R nobody:nobody /opt/appserver/var
-chown -R nobody:nobody /opt/appserver/webapps
-chown -R nobody:nobody /opt/appserver/deploy
+# Setup appserver by calling server.php with -s install to trigger install mode setup
+/opt/appserver/server.php -s install
 
 # Create composer symlink
 ln -sf /opt/appserver/bin/composer.phar /opt/appserver/bin/composer
@@ -43,11 +41,6 @@ ln -sf /opt/appserver/bin/composer.phar /opt/appserver/bin/composer
 chmod 775 /etc/init.d/appserver
 chmod 775 /etc/init.d/appserver-watcher
 chmod 775 /etc/init.d/appserver-php5-fpm
-
-# run postinstall script from appserver-io/appserver composer package to set correct path for specific startup scripts.
-# we have to set the composer home dir manually to avoid problems while installing within a GUI
-export COMPOSER_HOME=/tmp/.composer
-cd /opt/appserver && ./bin/php ./bin/composer.phar run-script post-install-cmd
 
 # Start the appserver + watcher + fpm
 /etc/init.d/appserver start
