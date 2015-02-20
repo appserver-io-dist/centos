@@ -32,7 +32,6 @@ configtest() {
 }
 
 # Start script is implemented manually as we had problems with the "daemon" command
-# @TODO switch to "daemon" command for a unified look and feel
 start() {
     # Do nothing if there already is a pid or lock file
     if ([ -f $PIDFILE -o -f LOCKFILE ]) then
@@ -46,8 +45,8 @@ start() {
     # Start the server as daemon
     printf "%-50s" "Starting $NAME..."
     cd $BASE_PATH
-	$DAEMON $DAEMON_OPTS &
-	PID=$!
+    $DAEMON $DAEMON_OPTS &
+    PID=$!
 
     # Did we get something useful?
     if ([ -z $PID ]) then
@@ -59,8 +58,8 @@ start() {
 
     echo_success
     echo
-	touch $LOCKFILE && echo $PID > $PIDFILE
-	return 0
+    touch $LOCKFILE && echo $PID > $PIDFILE
+    return 0
 }
 
 stop() {
