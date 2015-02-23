@@ -33,7 +33,8 @@ Provides:   appserver-dist
 
 
 %post
-if [ "$1" = "1" ]; then
+if [ "$1" = "1" ]
+then
   # Perform tasks to prepare for the initial installation
 
   # Setup appserver by calling server.php with -s install to trigger install mode setup
@@ -51,10 +52,6 @@ if [ "$1" = "1" ]; then
   /etc/init.d/appserver start
   /etc/init.d/appserver-watcher start
   /etc/init.d/appserver-php5-fpm start
-
-elif [ "$1" = "2" ]; then
-  # Perform whatever maintenance must occur before the upgrade begins
-
 fi
 
 # Reload shared library list
@@ -62,10 +59,8 @@ ldconfig
 
 
 %preun
-if [ "$1" = "1" ]; then
-  # Perform tasks to prepare for the upgrade
-
-elif [ "$1" = "0" ]; then
+if [ "$1" = "0" ]
+then
   # Perform tasks before un-installation
 
   # Stop the appserver + watcher + fpm
@@ -76,7 +71,8 @@ fi
 
 
 %postun
-if [ "$1" = "1" ]; then
+if [ "$1" = "1" ]
+then
   # Perform tasks to do after the upgrade
 
   # Conditionally restart the appserver + watcher + fpm
@@ -92,10 +88,6 @@ if [ "$1" = "1" ]; then
   then
       /etc/init.d/appserver-php5-fpm restart
   fi
-
-elif [ "$1" = "0" ]; then
-  # Perform tasks after un-installation
-
 fi
 
 # Reload shared library list
