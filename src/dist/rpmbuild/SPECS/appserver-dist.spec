@@ -43,16 +43,26 @@ then
   # Create composer symlink
   ln -sf /opt/appserver/bin/composer.phar /opt/appserver/bin/composer
 
+  # Change rights of the appserver + watcher + fpm
+  chmod 775 /etc/init.d/appserver
+  chmod 775 /etc/init.d/appserver-watcher
+  chmod 775 /etc/init.d/appserver-php5-fpm
+
   # Start the appserver + watcher + fpm
   /etc/init.d/appserver start
   /etc/init.d/appserver-watcher start
   /etc/init.d/appserver-php5-fpm start
-fi
 
-# Change rights of the appserver + watcher + fpm
+elif [ "$1" = "2" ]
+then
+  # Perform whatever maintenance must occur before the upgrade begins
+
+  # Change rights of the appserver + watcher + fpm
   chmod 775 /etc/init.d/appserver
   chmod 775 /etc/init.d/appserver-watcher
   chmod 775 /etc/init.d/appserver-php5-fpm
+
+fi
 
 # Reload shared library list
 ldconfig
