@@ -89,7 +89,7 @@
     <!-- ==================================================================== -->
     <target name="start-vagrant-box" depends="test-vagrant-box-started" if="vagrant.box.not-started">
         <!-- tell the user we need the box name first -->
-        <fail unless="{vagrant-box.name}" message="Please specify the type of box to start e.g. using 'ant start-vagrant-build-box'" />
+        <fail unless="vagrant-box.name" message="Please specify the type of box to start e.g. using 'ant start-vagrant-build-box'" />
         <!-- issue the actual start command -->
         <exec dir="${temp.dir}" executable="vagrant" failonerror="true">
             <arg line="up ${vagrant-box.name} --provider=${vagrant.provider} --destroy-on-error" />
