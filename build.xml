@@ -168,8 +168,8 @@
             <arg value="composer-installer" />
         </exec>
         <!-- also add the github oauth token to the local installation -->
-        <exec dir="${target.dir}/src${appserver-base.dir}" executable="php">
-            <arg line="${temp.dir}/composer.phar config github-oauth.github.com ${github.oauth.token}"/>
+        <exec dir="${temp.dir}" executable="php">
+            <arg line="./composer.phar config github-oauth.github.com ${github.oauth.token}"/>
         </exec>
     </target>
 
