@@ -42,7 +42,7 @@
         <!-- destroy the box after all work is done -->
         <antcall target="destroy-vagrant-box" />
     </target>
-    
+
     <!-- ==================================================================== -->
     <!-- Runs all available system tests within an expected vagrant box       -->
     <!-- ==================================================================== -->
