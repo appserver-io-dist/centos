@@ -98,7 +98,6 @@
     <!-- Will split a string at the "-" character                             -->
     <!-- ==================================================================== -->
     <scriptdef name="parse-vagrant-box-status" language="javascript">
-        
         <attribute name="status"/>
         <attribute name="boxname"/>
         <![CDATA[
@@ -114,7 +113,7 @@
         }
     ]]>
     </scriptdef>
-    
+
     <!-- ==================================================================== -->
     <!-- Will start a vagrant box within the tmp directory                    -->
     <!-- ==================================================================== -->
@@ -159,7 +158,7 @@
             <arg line="destroy -f" />
         </exec>
     </target>
-    
+
     <!-- ==================================================================== -->
     <!-- Installs composer in target directory                                -->
     <!-- ==================================================================== -->
@@ -167,6 +166,10 @@
         <get src="https://getcomposer.org/installer" dest="${temp.dir}/composer-installer" />
         <exec dir="${temp.dir}" executable="php">
             <arg value="composer-installer" />
+        </exec>
+        <!-- also add the github oauth token to the local installation -->
+        <exec dir="${target.dir}/src${appserver-base.dir}" executable="php">
+            <arg line="${temp.dir}/composer.phar config github-oauth.github.com ${github.oauth.token}"/>
         </exec>
     </target>
 
@@ -191,7 +194,8 @@
         <!-- create the file with the version number -->
         <echo file="${target.dir}/src/opt/appserver/etc/appserver/.release-version" message="${appserver.src.semver}-${build.number}${appserver.src.suffix}" />
         <!-- install dependencies via composer and let postinstall-scripts proceed -->
-        <exec dir="${target.dir}/src/opt/appserver" executable="php">
+        <echo message="Installing composer dependencies" />
+        <exec dir="${target.dir}/src${appserver-base.dir}" executable="php">
             <arg line="${temp.dir}/composer.phar install --prefer-dist --no-dev --no-interaction --ignore-platform-reqs --optimize-autoloader"/>
         </exec>
         <!-- create deploy folder if not exists -->
@@ -219,7 +223,6 @@
                 <expandproperties/>
             </filterchain>
         </copy>
-
         <!-- create the .rpm file -->
         <exec dir="${target.dir}" executable="rpmbuild" failonerror="true">
             <arg line="--buildroot ${target.dir}/src -bb ${target.dir}/src/rpmbuild/SPECS/appserver-dist.spec"/>
@@ -241,7 +244,6 @@
             <arg value="-C"/>
             <arg value="${target.dir}/opt"/>
         </exec>
-
         <!-- copy packaging build files to target -->
         <copy todir="${target.dir}/runtime">
             <fileset dir="${src.dir}/runtime">
@@ -251,7 +253,6 @@
                 <expandproperties/>
             </filterchain>
         </copy>
-
         <!-- create the .rpm file -->
         <exec dir="${target.dir}" executable="rpmbuild" failonerror="true">
             <arg line="--buildroot ${target.dir} -bb ${target.dir}/runtime/rpmbuild/SPECS/appserver-runtime.spec"/>
