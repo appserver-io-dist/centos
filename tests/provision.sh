@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # install ant and other dependencies
-yum -y install ant ant-contrib git;
+yum -y install ant ant-contrib ant-nodeps git;
 
 # download jmeter and make it usable
 wget -q ${jmeter.download.url};
