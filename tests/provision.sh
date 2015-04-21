@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# install epel as the official repos do not supply all appserver dependencies
+yum -y install epel-release;
 # install ant and other dependencies
 yum -y install ant ant-contrib ant-nodeps git;
 
