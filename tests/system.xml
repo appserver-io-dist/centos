@@ -51,8 +51,8 @@
     <!-- Tests if the additional "configtest" command works correctly         -->
     <!-- ==================================================================== -->
     <target name="test-configtest-command">
-        <exec dir="${test.basedir}" executable="appserverctl" failonerror="true">
-            <arg line="configtest" />
+        <exec dir="${service.init.basedir}" executable="bash" failonerror="true">
+            <arg line="appserver configtest" />
         </exec>
     </target>
 
