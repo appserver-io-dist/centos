@@ -40,9 +40,6 @@ then
   # Setup appserver by calling server.php with -s install to trigger install mode setup
   /opt/appserver/server.php -s install
 
-  # Create composer symlink
-  ln -sf /opt/appserver/bin/composer.phar /opt/appserver/bin/composer
-
   # Change rights of the appserver + watcher + fpm
   chmod 775 /etc/init.d/appserver
   chmod 775 /etc/init.d/appserver-watcher
