@@ -20,11 +20,12 @@ DESC="appserver-php5-fpm"
 PIDFILE="/var/run/${NAME}.pid"
 LOCKFILE="/var/lock/subsys/${NAME}"
 
-# Include the functions file as we need it for the "killproc" command
+# Include the functions file as we need it for some integrated commands
 . /etc/init.d/functions
 
+###
 # Start script is implemented manually as we had problems with the "daemon" command
-# @TODO switch to "daemon" command for a unified look and feel
+###
 start() {
     # Do nothing if there already is a pid or lock file
     if ([ -f $PIDFILE -o -f LOCKFILE ]) then
@@ -32,7 +33,7 @@ start() {
         echo -n "Process seems to run already...";
         echo_failure
         echo
-        return 1
+        return 2
     fi
 
     # Start the server as daemon
@@ -50,10 +51,13 @@ start() {
 
     echo_success
     echo
-	touch $LOCKFILE
-	return 0
+    touch $LOCKFILE
+    return 0
 }
 
+###
+# Stop the script execution
+###
 stop() {
     printf "%-50s" "Stopping $NAME..."
     killproc $NAME
@@ -63,25 +67,28 @@ stop() {
     return $RETVAL
 }
 
+###
+# Determine what to do
+###
 case "$1" in
-  start)
-	start
-	;;
-  stop)
-	stop
-	;;
-  restart|force-reload)
-	stop
-	start
-	;;
-  status)
-    status $NAME && exit 0 || exit $?
-	;;
-  *)
-	N=/etc/init.d/$NAME
-	echo "Usage: $N {start|stop|restart|force-reload|status}" >&2
-	exit 1
-	;;
+    start)
+        start
+    ;;
+    stop)
+        stop
+    ;;
+    restart|force-reload)
+        stop
+        start
+    ;;
+    status)
+        status "$NAME" && exit 0 || exit $?
+    ;;
+    *)
+        N=/etc/init.d/$NAME
+        echo "Usage: $N {start|stop|restart|force-reload|status}" >&2
+        exit 1
+    ;;
 esac
 
 exit 0

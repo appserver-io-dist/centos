@@ -20,7 +20,7 @@ DESC="appserver"
 PIDFILE="/var/run/${NAME}.pid"
 LOCKFILE="/var/lock/subsys/${NAME}"
 
-# Include the functions file as we need it for the "killproc" command
+# Include the functions file as we need it for some integrated commands
 . /etc/init.d/functions
 
 ###
@@ -31,39 +31,38 @@ configtest() {
     echo `$DAEMON $DAEMON_OPTS -t`;
 }
 
+###
 # Start script is implemented manually as we had problems with the "daemon" command
+###
 start() {
     # Do nothing if there already is a pid or lock file
-    if ([ -f $PIDFILE -o -f LOCKFILE ]) then
-
+    if ([ -f "$PIDFILE" -o -f LOCKFILE ]) then
         echo -n "Process seems to run already...";
         echo_failure
         echo
-        return 1
+        return 2
     fi
-
-    # Start the server as daemon
-    printf "%-50s" "Starting $NAME..."
-    cd $BASE_PATH
-    $DAEMON $DAEMON_OPTS &
-    PID=$!
-
-    # Did we get something useful?
-    if ([ -z $PID ]) then
-        echo -n "Process running but missing pid...";
+    # Do the actual starting
+    echo -n "Starting $NAME..."
+    PID=`$DAEMON $DAEMON_OPTS > /dev/null 2>&1 & echo $!`
+    if [ -z $PID ]; then
         echo_failure
         echo
         return 1
+    else
+        echo $PID > "$PIDFILE"
+        touch "$LOCKFILE"
+        echo_success
+        echo
+        return 0
     fi
-
-    echo_success
-    echo
-    touch $LOCKFILE && echo $PID > $PIDFILE
-    return 0
 }
 
+###
+# Stop the script execution
+###
 stop() {
-    printf "%-50s" "Stopping $NAME..."
+    echo -n "Stopping $NAME..."
     killproc $NAME
     RETVAL=$?
     echo
@@ -71,6 +70,9 @@ stop() {
     return $RETVAL
 }
 
+###
+# Determine what to do
+###
 case "$1" in
     start)
         start
@@ -83,11 +85,11 @@ case "$1" in
         start
     ;;
     status)
-        status $NAME && exit 0 || exit $?
+        status "$NAME" && exit 0 || exit $?
     ;;
     configtest)
         configtest
-        ;;
+    ;;
     *)
         N=/etc/init.d/$NAME
         echo "Usage: $N {start|stop|restart|force-reload|status|configtest}" >&2
