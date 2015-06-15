@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### BEGIN INIT INFO
-# Provides:          appserver-php5-fpm
+# Provides:          appserver-php5-fpm php-ts-fpm php5-ts-fpm
 # Required-Start:    $all
 # Required-Stop:     $all
 # Default-Start:     2 3 4 5
