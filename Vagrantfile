@@ -40,6 +40,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--memory", "2048"]
     vb.customize ["modifyvm", :id, "--cpus", "2"]
     vb.customize ["modifyvm", :id, "--cpuexecutioncap", "90"]
+
+    # Forcing another NIC type than the default one to avoid break-ups during NAT networking
+    vb.customize ["modifyvm", :id, "--nictype1", "Am79C973"]
   end
 
   config.vm.define :"${vagrant-box.name}" do |t|
