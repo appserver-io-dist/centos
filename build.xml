@@ -170,13 +170,7 @@
             <arg value="${target.dir}/opt"/>
         </exec>
         <!-- copy packaging build files to target -->
-        <copy todir="${target.dir}">
-            <fileset dir="${src.dir}/generic/runtime">
-                <include name="**/*"/>
-                <exclude name="rpmbuild/**"/>
-            </fileset>
-        </copy>
-        <copy todir="${target.dir}">
+        <copy todir="${target.dir}/runtime">
             <fileset dir="${src.dir}/generic/runtime">
                 <include name="rpmbuild/**"/>
             </fileset>
@@ -185,13 +179,13 @@
             </filterchain>
         </copy>
         <!-- overwrite the generic files with the version sepcific ones, do not fail if there are none -->
-        <copy todir="${target.dir}" overwrite="true" failonerror="false" quiet="true">
+        <copy todir="${target.dir}/runtime" overwrite="true" failonerror="false" quiet="true">
             <fileset dir="${src.dir}/${target-os.major.version}/runtime">
                 <include name="**/*"/>
                 <exclude name="rpmbuild/**"/>
             </fileset>
         </copy>
-        <copy todir="${target.dir}" overwrite="true" failonerror="false" quiet="true">
+        <copy todir="${target.dir}/runtime" overwrite="true" failonerror="false" quiet="true">
             <fileset dir="${src.dir}/${target-os.major.version}/runtime">
                 <include name="rpmbuild/**"/>
             </fileset>
