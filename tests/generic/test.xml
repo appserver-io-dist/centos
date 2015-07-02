@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
-<project name="appserver-io-dist/centos-tests" basedir="..">
+<project name="appserver-io-dist/centos-generic-tests" basedir="..">
 
     <!-- Read in tests property files -->
-    <property file="${basedir}/tests/tests.properties"/>
-    <property file="${basedir}/tests/tests.default.properties"/>
+    <property file="${basedir}/tests/generic/tests.properties"/>
+    <property file="${basedir}/tests/generic/tests.default.properties"/>
 
     <!-- ==================================================================== -->
     <!-- Import the tests/*.xml files                                           -->
@@ -18,7 +18,7 @@
         <!-- try to install the appserver dist package -->
         <exec dir="${test.basedir}" executable="bash" failonerror="true">
             <arg value="-c" />
-            <arg value="yum -y install ${vagrant-build.dir}/${build.name.prefix}dist-*.${os.version.prefix}${target-os.major.version}.${os.architecture}.rpm" />
+            <arg value="yum -y install ${vagrant-build.dir}/${build.name.prefix}dist-*.${distribution.identifier}.${os.architecture}.rpm" />
         </exec>
     </target>
 
