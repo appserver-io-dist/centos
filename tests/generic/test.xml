@@ -18,7 +18,7 @@
         <!-- try to install the appserver dist package -->
         <exec dir="${test.basedir}" executable="bash" failonerror="true">
             <arg value="-c" />
-            <arg value="yum -y install ${vagrant-build.dir}/${build.name.prefix}dist-*.${os.version.prefix}${target-os.major.version}.${os.architecture}.rpm" />
+            <arg value="yum -y install ${vagrant-build.dir}/${build.name.prefix}dist-*.${distribution.identifier}.${os.architecture}.rpm" />
         </exec>
     </target>
 
