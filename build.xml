@@ -120,13 +120,28 @@
         <antcall target="prepare-appserver-dist" />
         <!-- copy packaging build files to target -->
         <copy todir="${target.dir}/src">
-            <fileset dir="${src.dir}/dist">
+            <fileset dir="${src.dir}/generic/dist">
                 <include name="**/*"/>
                 <exclude name="rpmbuild/**"/>
             </fileset>
         </copy>
         <copy todir="${target.dir}/src">
-            <fileset dir="${src.dir}/dist">
+            <fileset dir="${src.dir}/generic/dist">
+                <include name="rpmbuild/**"/>
+            </fileset>
+            <filterchain>
+                <expandproperties/>
+            </filterchain>
+        </copy>
+        <!-- overwrite the generic files with the version sepcific ones, do not fail if there are none -->
+        <copy todir="${target.dir}/src" overwrite="true" failonerror="false" quiet="true">
+            <fileset dir="${src.dir}/${target-os.major.version}/dist">
+                <include name="**/*"/>
+                <exclude name="rpmbuild/**"/>
+            </fileset>
+        </copy>
+        <copy todir="${target.dir}/src" overwrite="true" failonerror="false" quiet="true">
+            <fileset dir="${src.dir}/${target-os.major.version}/dist">
                 <include name="rpmbuild/**"/>
             </fileset>
             <filterchain>
@@ -155,8 +170,29 @@
             <arg value="${target.dir}/opt"/>
         </exec>
         <!-- copy packaging build files to target -->
-        <copy todir="${target.dir}/runtime">
-            <fileset dir="${src.dir}/runtime">
+        <copy todir="${target.dir}">
+            <fileset dir="${src.dir}/generic/runtime">
+                <include name="**/*"/>
+                <exclude name="rpmbuild/**"/>
+            </fileset>
+        </copy>
+        <copy todir="${target.dir}">
+            <fileset dir="${src.dir}/generic/runtime">
+                <include name="rpmbuild/**"/>
+            </fileset>
+            <filterchain>
+                <expandproperties/>
+            </filterchain>
+        </copy>
+        <!-- overwrite the generic files with the version sepcific ones, do not fail if there are none -->
+        <copy todir="${target.dir}" overwrite="true" failonerror="false" quiet="true">
+            <fileset dir="${src.dir}/${target-os.major.version}/runtime">
+                <include name="**/*"/>
+                <exclude name="rpmbuild/**"/>
+            </fileset>
+        </copy>
+        <copy todir="${target.dir}" overwrite="true" failonerror="false" quiet="true">
+            <fileset dir="${src.dir}/${target-os.major.version}/runtime">
                 <include name="rpmbuild/**"/>
             </fileset>
             <filterchain>
