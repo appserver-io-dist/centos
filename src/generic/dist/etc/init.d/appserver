@@ -28,6 +28,7 @@ LOCKFILE="/var/lock/subsys/${NAME}"
 ###
 configtest() {
     printf "%-50s" "Testing config of $NAME..."
+    cd "$BASE_PATH"
     echo `$DAEMON $DAEMON_OPTS -t`;
 }
 
@@ -44,6 +45,7 @@ start() {
     fi
     # Do the actual starting
     echo -n "Starting $NAME..."
+    cd "$BASE_PATH"
     PID=`$DAEMON $DAEMON_OPTS > /dev/null 2>&1 & echo $!`
     if [ -z $PID ]; then
         echo_failure
