@@ -3,32 +3,6 @@
 <project name="appserver-io-dist/centos-generic-tests-system" basedir="..">
 
     <!-- ==================================================================== -->
-    <!-- Runs all available system tests locally                              -->
-    <!-- ==================================================================== -->
-    <target name="local-run-system-tests" depends="prepare-reports">
-        <!-- test runtime installation -->
-        <antcall target="test-install-runtime" />
-        <!-- test dist installation -->
-        <antcall target="test-install-dist" />
-        <!-- delay further tests a little to allow the daemons to do their initial background work -->
-        <antcall target="delay-further-tests">
-            <param name="test.delay.interval" value="10"/>
-        </antcall>
-        <!-- test if the services are running -->
-        <antcall target="test-services-running" />
-        <!-- test if there have been errors during startup -->
-        <antcall target="test-errors-log-exists" />
-        <!-- test if the services are reachable -->
-        <antcall target="test-services-reachable" />
-        <!-- test if bundled apps were deployed correctly -->
-        <antcall target="test-bundled-apps-deployed" />
-        <!-- test if the "configtest" command works -->
-        <antcall target="test-configtest-command" />
-        <!-- test if the bundled binaries and executables are present and usable -->
-        <antcall target="test-executable-exist" />
-    </target>
-
-    <!-- ==================================================================== -->
     <!-- Tests if the bundled services are currently running                  -->
     <!-- ==================================================================== -->
     <target name="test-services-running">
