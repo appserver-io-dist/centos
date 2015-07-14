@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+<project name="appserver-io-dist/centos-7-tests" basedir="..">
+
+    <!-- Read in tests property files -->
+    <property file="${basedir}/tests/7/tests.properties"/>
+    <property file="${basedir}/tests/7/tests.default.properties"/>
+    <property file="${basedir}/tests/generic/tests.properties"/>
+    <property file="${basedir}/tests/generic/tests.default.properties"/>
+
+    <!-- ==================================================================== -->
+    <!-- Import the tests/*.xml files                                           -->
+    <!-- ==================================================================== -->
+    <import file="system.xml"/>
+
+</project>
